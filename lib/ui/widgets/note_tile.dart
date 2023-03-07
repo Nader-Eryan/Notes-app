@@ -70,15 +70,6 @@ class NoteTile extends StatelessWidget {
                                       size: 17,
                                       color: Colors.grey[300],
                                     ),
-                                    // Text(
-                                    //   ' ${task.startTime} - ${task.endTime}',
-                                    //   style: GoogleFonts.lato(
-                                    //     textStyle: TextStyle(
-                                    //       color: Colors.grey[100],
-                                    //       fontSize: 13,
-                                    //     ),
-                                    //   ),
-                                    // ),
                                     Text(
                                       ' ${note.date!.split(' ')[0]}',
                                       style: GoogleFonts.lato(
@@ -133,8 +124,8 @@ class NoteTile extends StatelessWidget {
                                           },
                                         );
                                         SqlDb sqlDb = SqlDb();
-                                        int response = await sqlDb.updateData(
-                                            '''
+                                        int response =
+                                            await sqlDb.updateData('''
                                   UPDATE notes SET 'isCompleted'= ${note.isCompleted} WHERE id = ${note.id}
                                   ''');
                                         if (response > 0) {
@@ -163,6 +154,15 @@ class NoteTile extends StatelessWidget {
                                       icon: const Icon(Icons.access_alarm),
                                     )
                                   ],
+                                ),
+                              ),
+                              Text(
+                                ' ${note.startTime} - ${note.endTime}',
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.grey[100],
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -209,8 +209,7 @@ class NoteTile extends StatelessWidget {
 
   Future<void> _deleteNote(BuildContext context) async {
     SqlDb sqlDb = SqlDb();
-    int response = await sqlDb.deleteData(
-        '''
+    int response = await sqlDb.deleteData('''
                                    DELETE FROM notes WHERE id = ${note.id}
                                       ''');
     if (response > 0) {

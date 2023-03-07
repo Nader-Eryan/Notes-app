@@ -14,22 +14,26 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  get_storage: ^2.0.3
-  get: ^4.3.8
-  flutter_local_notifications: ^8.2.0
-  flutter_native_timezone: ^2.0.0
-  intl: ^0.17.0
-  google_fonts: ^2.1.0
-  date_picker_timeline: ^1.2.3
-  sqflite: ^2.0.0+4
-  flutter_staggered_animations: ^1.0.0
-  flutter_svg: ^0.22.0
-  rxdart: ^0.27.2
-  fluttertoast: ^8.1.1
-  image_cropper: ^3.0.1
-  image_picker: ^0.8.6+1
-  easy_localization: ^3.0.1
+  cupertino_icons: 
+  get_storage:
+  get: 
+  flutter_local_notifications: 
+  flutter_native_timezone: 
+  intl: 
+  google_fonts: 
+  date_picker_timeline:
+  sqflite: 
+  flutter_staggered_animations: 
+  flutter_svg: 
+  rxdart: 
+  fluttertoast: 
+  image_cropper: 
+  image_picker: 
+  easy_localization:
+  path: 
+  provider: 
+  flutter_sound: ^9.2.13
+  assets_audio_player: ^3.0.6
 
 dev_dependencies:
   flutter_test:

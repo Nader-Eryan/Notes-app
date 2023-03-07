@@ -6,6 +6,7 @@ import 'package:todo/services/get_color.dart';
 import 'package:todo/services/image_capture.dart';
 import 'package:todo/services/theme.dart';
 import 'package:todo/ui/pages/home_page.dart';
+import 'package:todo/ui/pages/image_diaog.dart';
 import '../../models/note.dart';
 import '../../services/size_config.dart';
 
@@ -19,6 +20,7 @@ class NotePage extends StatefulWidget {
 
 class _NotePageState extends State<NotePage> {
   final List<String> imagesList = [];
+  final Map<String, int> idMap = {};
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   @override
@@ -33,8 +35,10 @@ class _NotePageState extends State<NotePage> {
     List<Map> response = await SqlDb().readData('''
       SELECT * FROM 'images' WHERE noteId = ${widget.noteModel.id}
     ''');
+    int cnt = 0;
     for (Map it in response) {
       imagesList.add(it['image']);
+      idMap[imagesList[cnt++]] = it['id'];
     }
     setState(() {});
   }
@@ -108,10 +112,14 @@ class _NotePageState extends State<NotePage> {
               : Expanded(
                   child: GridView.builder(
                     itemCount: imagesList.length,
-                    itemBuilder: (context, index) => Image.file(
-                      File(imagesList[index]),
-                      height: SizeConfig.screenHeight / 3,
-                      width: double.infinity,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () => navigateToImageDialog(
+                          index, widget.noteModel, idMap[imagesList[index]]!),
+                      child: Image.file(
+                        File(imagesList[index]),
+                        height: SizeConfig.screenHeight / 3,
+                        width: double.infinity,
+                      ),
                     ),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -142,6 +150,14 @@ class _NotePageState extends State<NotePage> {
         ],
       ),
     );
+  }
+
+  void navigateToImageDialog(int index, Note noteModel, int imgId) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                ImageDialog(imagesList[index], noteModel, imgId)));
   }
 
   Column _noAttachments(BuildContext context) {

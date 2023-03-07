@@ -29,9 +29,8 @@ class _EditNoteState extends State<EditNote> {
   final TextEditingController _noteController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
-  final String _startTime =
-      DateFormat('hh:mm a').format(DateTime.now()).toString();
-  final String _endTime = DateFormat('hh:mm a')
+  String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  String _endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 15)))
       .toString();
   int _selectedRemind = 5;
@@ -84,17 +83,27 @@ class _EditNoteState extends State<EditNote> {
             Row(
               children: [
                 Expanded(
-                  child: InputField(
-                    title: 'Start Time',
-                    hint: widget.note.startTime!,
-                    widget: const Icon(Icons.alarm),
+                  child: GestureDetector(
+                    onTap: () {
+                      _showTimePicker(context, true);
+                    },
+                    child: ListTile(
+                      title: Text('Start Time'),
+                      subtitle: Text(_startTime),
+                      trailing: const Icon(Icons.alarm),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: InputField(
-                    title: 'End Time',
-                    hint: widget.note.endTime!,
-                    widget: const Icon(Icons.alarm),
+                  child: GestureDetector(
+                    onTap: () {
+                      _showTimePicker(context, false);
+                    },
+                    child: ListTile(
+                      title: Text('End Time'),
+                      subtitle: Text(_endTime),
+                      trailing: const Icon(Icons.alarm),
+                    ),
                   ),
                 ),
               ],
@@ -276,5 +285,18 @@ class _EditNoteState extends State<EditNote> {
         ),
       ),
     );
+  }
+
+  void _showTimePicker(BuildContext context, bool isStart) {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      if (value == null) return;
+      setState(() {
+        if (isStart)
+          _startTime = value.format(context);
+        else
+          _endTime = value.format(context);
+      });
+    });
   }
 }

@@ -43,7 +43,7 @@ class SqlDb {
       )
     ''');
     db.execute('''
-      CREATE TABLE 'Images' (
+      CREATE TABLE 'images' (
         'id' INTEGER NOT NULL PRIMARY KEY,
         'image' TEXT,
         'noteId' INT
